@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Data Preparation
 1. download the NUDT-SIRST dataset and SIRST dataset
-2. run mosaic.py to generate Mosaic image
+2. run `mosaic.py` to generate Mosaic image
 3. run `degrade.py` to get mix image
 
 ## Generate  augmentation sample
