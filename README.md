@@ -4,8 +4,6 @@
 ```bash
 conda create -n diffmosaic python=3.9
 conda activate diffmosaic
-conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
-conda install xformers==0.0.16 -c xformers
 pip install -r requirements.txt
 ```
 
