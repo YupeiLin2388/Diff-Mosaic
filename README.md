@@ -24,3 +24,20 @@ pip install -r requirements.txt
 python inference.py --input ./add_noise/NUDT_mosaic/  --config configs/model/diff_prior.yaml --ckpt weights/NUDT_stage2/last.ckpt --swinir_ckpt weights/NUDT_stage1/last.ckpt --steps 50 --sr_scale 1 --repeat_times 1 --color_fix_type wavelet --output results/nudt_moc/ --device cuda --use_guidance --g_scale 400 --g_t_start 200
 ```
 
+## Detection network
+1. Download dataset( [[google]](https://drive.google.com/file/d/1LD_F78aZ86edZpkDBYAVjXSOIARf5RzP/view?usp=drive_link)) and place it in `./detection_model/dataset/`
+2. Downolad pretrained model ( [[google]](https://drive.google.com/file/d/13RJnyuov2I0FsSvCPap1BlrIwfNmEFsN/view?usp=drive_link)) and place it in `./detection_model/pretrained_model/`
+
+## train
+```bash
+python train.py --base_size 256 --crop_size 256 --epochs 3000 --dataset enh_NUDT_aug --split_method 50_50 --model DNANet --backbone resnet_18  --deep_supervision True --train_batch_size 40 --test_batch_size 16 --mode TXT
+```
+
+
+## inference
+```bash
+python test.py --base_size 256 --crop_size 256   --model_dir ./pretrained_model/NUDT.tar --dataset NUDT_aug --split_method 50_50 --model DNANet --backbone resnet_18  --deep_supervision True --test_batch_size 1 --mode TXT
+```
+
+## Acknowledgement
+This project is build based on [DNANet](https://github.com/YeRen123455/Infrared-Small-Target-Detection) and [DiffBIR](https://github.com/XPixelGroup/DiffBIR). We thank the authors for sharing their code.
