@@ -1,4 +1,14 @@
-# Diff-Mosaic: Augmenting Realistic Representations in Infrared Small Target Detection via Diffusion Prior
+# Diff-Mosaic
+**Diff-Mosaic ：Augmenting Realistic Representations in Infrared Small Target Detection via Diffusion Prior(TGRS 2024)**  [pdf](https://ieeexplore.ieee.org/document/10542973)
+## Framework
+
+![framework](./fig/framework.PNG)
+
+## Experiment result
+
+![result](./fig/result.PNG)
+
+## 
 ## Inastall
 
 ```bash
@@ -27,6 +37,7 @@ python inference.py --input ./add_noise/NUDT_mosaic/  --config configs/model/dif
 ## Detection network
 1. Download dataset( [[google]](https://drive.google.com/file/d/1LD_F78aZ86edZpkDBYAVjXSOIARf5RzP/view?usp=drive_link)) and place it in `./detection_model/dataset/`
 2. Downolad pretrained model ( [[google]](https://drive.google.com/file/d/13RJnyuov2I0FsSvCPap1BlrIwfNmEFsN/view?usp=drive_link)) and place it in `./detection_model/pretrained_model/`
+3. cd `./detection_model/`
 
 ## train
 ```bash
