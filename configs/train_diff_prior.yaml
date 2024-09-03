@@ -1,0 +1,53 @@
+data:
+  target: dataset.data_module.BIRDataModule
+  params:
+    # Path to training set configuration file.
+    train_config: ./configs/dataset/train.yaml
+    # Path to validation set configuration file.
+    val_config: ./configs/dataset/val.yaml
+
+model:
+  # You can set learning rate in the following configuration file.
+  config: configs/model/diff_prior.yaml
+  # Path to the checkpoints or weights you want to resume. At the begining, 
+  # this should be set to the initial weights created by scripts/make_stage2_init_weight.py.
+  resume: ./weights/stage2/nuaa_init.ckpt
+
+lightning:
+  seed: 231
+  
+  trainer:
+    accelerator: ddp
+    precision: 32
+    # Indices of GPUs used for training.
+    gpus: [0,1]
+    # Path to save logs and checkpoints.
+    default_root_dir: ./weights/NUAA_stage2/
+    # Max number of training steps (batches).
+    max_epochs: 50
+    #max_steps: 2000
+    # Validation frequency in terms of training steps.
+    val_check_interval: 100
+    log_every_n_steps: 200
+    # Accumulate gradients from multiple batches so as to increase batch size.
+    accumulate_grad_batches: 1
+  
+  callbacks:
+    - target: model.callbacks.ImageLogger
+      params:
+        # Log frequency of image logger.
+        log_every_n_steps: 100000000
+        max_images_each_step: 4
+        log_images_kwargs: ~
+
+    - target: model.callbacks.ModelCheckpoint
+      params:
+        # Frequency of saving checkpoints.
+        monitor: 'train/loss'
+        mode: min
+        dirpath: ./weights/NUAA_stage2/
+        save_weights_only: True
+        #every_n_epochs: 15
+        save_last: True
+        save_top_k: 3
+        filename: "{epoch}+{step}"
