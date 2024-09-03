@@ -16,6 +16,36 @@ conda create -n diffmosaic python=3.9
 conda activate diffmosaic
 pip install -r requirements.txt
 ```
+## Train Pixel-Piror
+Download the NUDT-SIRST dataset and SIRST dataset.
+
+Download pretrained  [general_swinir_v1.ckpt ](https://huggingface.co/lxq007/DiffBIR/resolve/main/general_swinir_v1.ckpt)  to ./weight/ 
+
+```shell
+python train.py --config ./configs/train_pixel_prior.yaml
+```
+
+## Train Diff-Piror
+
+1. Download pretrained [v2-1_512-ema-pruned.ckpt](https://huggingface.co/stabilityai/stable-diffusion-2-1-base)    to  ./weight/ 
+
+2. Create the initial model weights.
+
+   ```shell
+   python scripts/make_stage2_init_weight.py \
+   --cldm_config ./configs/model/pixel_prior.yaml \
+   --sd_weight ./weights/v2-1_512-ema-pruned.ckpt
+   --swinir_weight  ./weights/NUAA_stage1/NUAA.ckpt
+   --output ./weights/stage2/nuaa_init.ckpt
+   ```
+
+3. Start training.
+
+   ```shell
+   python train.py --config ./configs/train_diff_prior.yaml
+   ```
+
+
 
 ## pre-trained model
 
